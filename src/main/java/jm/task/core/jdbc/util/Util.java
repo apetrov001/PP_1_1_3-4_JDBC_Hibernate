@@ -6,23 +6,20 @@ import java.sql.SQLException;
 
 public class Util {
 
-    public static Connection getMySQLConnection() throws SQLException, ClassNotFoundException {
-        String hostName = "localhost";
-        String dbName = "first";
-        String userName = "root";
-        String password = "Cas%_po361";
+    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
+    private static final String HOST = "jdbc:mysql://localhost:3306/first?useSSL=false&allowMultiQueries=true&serverTimezone=UTC";
+    private static final String LOGIN = "root";
+    private static final String PASSWORD = "Cas%_po361";
 
-        return getMySQLConnection(hostName, dbName, userName, password);
-    }
-
-    public static Connection getMySQLConnection(String hostName, String dbName,
-                                                String userName, String password)
-                                                throws SQLException, ClassNotFoundException {
-                String connectionURL = "jdbc:mysql://" + hostName + ":3306/" + dbName;
-
-        Connection conn = DriverManager.getConnection(connectionURL, userName,
-                password);
+    public static Connection getMySQLConnection() {
+        Connection conn = null;
+        try {
+            Class.forName(DRIVER);
+            conn = DriverManager.getConnection(HOST, LOGIN, PASSWORD);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         return conn;
     }
-
 }
+
