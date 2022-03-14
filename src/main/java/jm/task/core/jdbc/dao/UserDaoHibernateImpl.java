@@ -78,7 +78,9 @@ public class UserDaoHibernateImpl implements UserDao {
         Transaction transaction = null;
         try (session) {
             transaction = session.beginTransaction();
-            session.delete(session.get(User.class, id));
+            //session.delete(session.get(User.class, id)); 1й вариант
+            session.createQuery("delete User where id = :id")
+                    .setParameter("id", id).executeUpdate();
             transaction.commit();
             System.out.println("User удален");
         } catch (HibernateException e) {
@@ -95,10 +97,8 @@ public class UserDaoHibernateImpl implements UserDao {
         Transaction transaction = null;
 
         try (session) {
-            CriteriaQuery<User> criteriaQuery = session.getCriteriaBuilder().createQuery(User.class);
-            criteriaQuery.from(User.class);
             transaction = session.beginTransaction();
-            List<User> userList = session.createQuery(criteriaQuery).getResultList();
+            List<User> userList = session.createQuery("from User order by name").list();
             transaction.commit();
             return userList;
         } catch (HibernateException e) {
