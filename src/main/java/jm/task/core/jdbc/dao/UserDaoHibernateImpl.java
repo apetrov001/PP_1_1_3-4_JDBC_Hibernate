@@ -1,24 +1,19 @@
 package jm.task.core.jdbc.dao;
 
 import jm.task.core.jdbc.model.User;
-import jm.task.core.jdbc.util.Util;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 
-import javax.persistence.criteria.CriteriaQuery;
+import java.sql.SQLException;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
-    private final SessionFactory sessionFactory = Util.getConnection();
-
     public UserDaoHibernateImpl() {
+
     }
 
 
     @Override
     public void createUsersTable() {
+
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
         try (session) {
@@ -36,10 +31,12 @@ public class UserDaoHibernateImpl implements UserDao {
                 transaction.rollback();
             }
         }
+
     }
 
     @Override
     public void dropUsersTable() {
+
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
         try (session) {
@@ -53,10 +50,12 @@ public class UserDaoHibernateImpl implements UserDao {
                 transaction.rollback();
             }
         }
+
     }
 
     @Override
     public void saveUser(String name, String lastName, byte age) {
+
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
         try (session) {
@@ -70,10 +69,12 @@ public class UserDaoHibernateImpl implements UserDao {
                 transaction.rollback();
             }
         }
+
     }
 
     @Override
     public void removeUserById(long id) {
+
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
         try (session) {
@@ -89,10 +90,12 @@ public class UserDaoHibernateImpl implements UserDao {
                 transaction.rollback();
             }
         }
+
     }
 
     @Override
     public List<User> getAllUsers() {
+
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
 
@@ -107,11 +110,13 @@ public class UserDaoHibernateImpl implements UserDao {
                 transaction.rollback();
             }
         }
+
         return null;
     }
 
     @Override
     public void cleanUsersTable() {
+
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
         try (session) {
@@ -125,5 +130,6 @@ public class UserDaoHibernateImpl implements UserDao {
                 transaction.rollback();
             }
         }
+
     }
 }
